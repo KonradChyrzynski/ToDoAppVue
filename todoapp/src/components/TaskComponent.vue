@@ -2,7 +2,10 @@
     <div v-if="show">
         <p :class="{ 'complete-task': task.complete }">{{ task.value }}</p>
         <button @click="removeTask"><i class="fa fa-trash" aria-hidden="true"></i></button>
-        <button @click="changeTaskState"><i class="fa-solid fa-check"></i></button>
+        <button @click="changeTaskState">
+            <i v-if="!task.complete" class="fa-solid fa-check"></i>
+            <i v-if="task.complete" class="fa-solid fa-x"></i>
+        </button>
         <button @click="updateTask"><i class="fa-solid fa-edit"></i></button>
     </div>
 </template>
