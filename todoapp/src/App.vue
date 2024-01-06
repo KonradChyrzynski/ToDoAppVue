@@ -1,6 +1,12 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <TaskInput @add-task="afterAddTask" @task-updated="afterTaskUpdate" v-model="modelValue" />
+  <p>Sort by:</p>
+  <select v-model="sortBy" @click.prevent="sortTasks">
+    <option value="complete">Complete</option>
+    <option value="incomplete">Incomplete</option>
+  </select>
+  <p>Filter by:</p>
   <select v-model="select">
     <option value="all">All</option>
     <option value="complete">Complete</option>
@@ -27,13 +33,23 @@ export default {
         { id: 1, value: 'Learn Vue.js', complete: true },
         { id: 2, value: 'Learn about single-file components', complete: false },
         { id: 3, value: 'Fall in love', complete: false }
-      ],
+      ].sort((a, b) => a.complete - b.complete),
       modelValue: '',
       select: 'all',
+      sortBy: 'complete',
       id: undefined
     }
   },
   methods: {
+    sortTasks() {
+      this.tasks = this.tasks.sort((a, b) => {
+        if (this.sortBy === 'complete') {
+          return a.complete - b.complete;
+        } else {
+          return b.complete - a.complete;
+        }
+      });
+    },
     afterAddTask(task) {
       this.tasks = [...this.tasks, task];
     },
