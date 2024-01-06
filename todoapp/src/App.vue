@@ -28,22 +28,29 @@ export default {
     TaskComponent
   },
   data() {
-    return {
-      tasks: [
+    let tasks;
+    if (localStorage.getItem('tasks')) {
+      tasks = JSON.parse(localStorage.getItem('tasks'));
+    } else {
+      tasks = [
         { id: 1, value: 'Learn Vue.js', complete: true },
         { id: 2, value: 'Learn about single-file components', complete: false },
         { id: 3, value: 'Fall in love', complete: false }
-      ].sort((a, b) => a.complete - b.complete),
+      ].sort((a, b) => a.complete - b.complete);
+    }
+
+    return {
+      tasks: tasks,
       modelValue: '',
       select: 'all',
-      sortBy: 'complete',
+      sortBy: 'incomplete',
       id: undefined
     }
   },
   methods: {
     sortTasks() {
       this.tasks = this.tasks.sort((a, b) => {
-        if (this.sortBy === 'complete') {
+        if (this.sortBy === 'incomplete') {
           return a.complete - b.complete;
         } else {
           return b.complete - a.complete;
@@ -67,6 +74,14 @@ export default {
       this.tasks = this.tasks.map(t => t.id === this.id ? { ...t, value: task } : t);
       this.id = undefined;
       this.modelValue = '';
+    }
+  },
+  watch: {
+    tasks: {
+      handler(newTasksArray) {
+        localStorage.setItem('tasks', JSON.stringify(newTasksArray));
+      },
+      deep: true
     }
   }
 }
