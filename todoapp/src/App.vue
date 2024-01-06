@@ -1,13 +1,15 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <TaskInput />
-  <select>
+  <TaskInput @add-task="afterAddTask" @task-updated="afterTaskUpdate" v-model="modelValue" />
+  <select v-model="select">
     <option value="all">All</option>
     <option value="complete">Complete</option>
     <option value="incomplete">Incomplete</option>
   </select>
-  <TaskComponent @change-task-state="onChangeTaskState" @remove-task="onRemoveTask" v-for="task in tasks" :key="task"
-    :task="task" />
+  <div v-for="task in tasks" :key="task">
+    <TaskComponent @update-task="onTaskUpdate" @change-task-state="onChangeTaskState" @remove-task="onRemoveTask"
+      :task="task" :selected="select" />
+  </div>
 </template>
 <script>
 import TaskInput from './components/TaskInput.vue'
@@ -25,17 +27,30 @@ export default {
         { id: 1, value: 'Learn Vue.js', complete: true },
         { id: 2, value: 'Learn about single-file components', complete: false },
         { id: 3, value: 'Fall in love', complete: false }
-      ]
+      ],
+      modelValue: '',
+      select: 'all',
+      id: undefined
     }
   },
   methods: {
+    afterAddTask(task) {
+      this.tasks = [...this.tasks, task];
+    },
     onRemoveTask(task) {
-      console.log('onRemoveTask', task)
       this.tasks = this.tasks.filter(t => t.id !== task.id);
     },
     onChangeTaskState(task) {
-      console.log('onChangeTaskState', task)
       this.tasks = this.tasks.map(t => t.id === task.id ? { ...t, complete: !t.complete } : t);
+    },
+    onTaskUpdate(task) {
+      this.id = task.id;
+      this.modelValue = task.value;
+    },
+    afterTaskUpdate(task) {
+      this.tasks = this.tasks.map(t => t.id === this.id ? { ...t, value: task } : t);
+      this.id = undefined;
+      this.modelValue = '';
     }
   }
 }
