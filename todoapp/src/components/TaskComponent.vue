@@ -1,20 +1,23 @@
 <template>
-    <div>
+    <div v-if="show">
         <p :class="{ 'complete-task': task.complete }">{{ task.value }}</p>
-        <button @click="removeTask">Remove Task</button>
+        <button @click="removeTask"><i class="fa fa-trash" aria-hidden="true"></i></button>
         <button @click="changeTaskState"><i class="fa-solid fa-check"></i></button>
+        <button @click="updateTask"><i class="fa-solid fa-edit"></i></button>
     </div>
 </template>
 
 <script>
+import { useTaskButtonStore } from '@/stores/taskButtonStore'
 export default {
     name: 'TaskComponent',
-    props: {
-        task: {
-            type: String,
-            required: true
+    setup() {
+        const updateButtonStore = useTaskButtonStore()
+        return {
+            updateButtonStore
         }
     },
+    props: ['task', 'selected'],
     methods: {
         removeTask() {
             this.$emit('remove-task', this.task);
@@ -23,7 +26,16 @@ export default {
             this.$emit('change-task-state', this.task);
         },
         updateTask() {
+            if (!this.updateButtonStore.updateButton) {
+                this.updateButtonStore.setIsTaskButtonVisible()
+            }
             this.$emit('update-task', this.task);
+        }
+    },
+    computed: {
+        show() {
+            console.log(this.selected)
+            return this.selected === 'all' || (this.selected === 'complete' && this.task.complete) || (this.selected === 'incomplete' && !this.task.complete);
         }
     }
 }

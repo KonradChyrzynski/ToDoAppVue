@@ -1,33 +1,44 @@
 <template>
     <div class="task-input">
-        <input type="text" v-model="task" />
-        <button @click="addTask">Add Task</button>
+        <input type="text" v-model="inputModel" />
+        <button v-if="!updateButtonStore.updateButton" @click="addTask">Add Task</button>
+        <button v-if="updateButtonStore.updateButton" @click="updateTask">Update Task</button>
     </div>
 </template>
 
 <script>
+import { useTaskButtonStore } from '@/stores/taskButtonStore'
+import { useTaskIdStore } from '@/stores/taskIdStore'
 export default {
     name: 'TaskInput',
-    data() {
+    setup() {
+        const updateButtonStore = useTaskButtonStore()
+        const taskIdStore = useTaskIdStore()
         return {
-            task: ''
+            updateButtonStore,
+            taskIdStore
         }
     },
-    // props: ['modelValue'],
-    // computed: {
-    //     inputModel: {
-    //         get() {
-    //             return this.modelValue
-    //         },
-    //         set(value) {
-    //             this.$emit('update:modelValue', value)
-    //         }
-    //     }
-    // },
+    props: ['modelValue', 'id'],
+    computed: {
+        inputModel: {
+            get() {
+                return this.modelValue
+            },
+            set(value) {
+                this.$emit('update:modelValue', value)
+            }
+        }
+    },
     methods: {
         addTask() {
-            this.$emit('add-task', this.task);
+            this.taskIdStore.increment()
+            this.$emit('add-task', { id: this.taskIdStore.taskId, value: this.inputModel, complete: false });
             this.task = '';
+        },
+        updateTask() {
+            this.updateButtonStore.setIsTaskButtonVisible()
+            this.$emit('task-updated', this.inputModel);
         }
     }
 }
