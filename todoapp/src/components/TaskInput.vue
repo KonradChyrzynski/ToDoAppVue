@@ -2,7 +2,7 @@
     <div class="task-input">
         <input type="text" v-model="inputModel" />
         <button v-if="!updateButtonStore.updateButton" @click="addTask">Add Task</button>
-        <button v-if="updateButtonStore.updateButton" @click="updateTask">Update Task</button>
+        <button v-if="updateButtonStore.updateButton" @click="updateTask">Update</button>
     </div>
 </template>
 

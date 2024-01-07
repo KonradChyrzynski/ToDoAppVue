@@ -80,6 +80,7 @@ export default {
     tasks: {
       handler(newTasksArray) {
         localStorage.setItem('tasks', JSON.stringify(newTasksArray));
+        this.sortTasks(this.tasks)
       },
       deep: true
     }

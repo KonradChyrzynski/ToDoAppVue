@@ -37,16 +37,22 @@ export default {
     },
     computed: {
         show() {
-            console.log(this.selected)
-            return this.selected === 'all' || (this.selected === 'complete' && this.task.complete) || (this.selected === 'incomplete' && !this.task.complete);
+            return this.selected === 'all' || (this.selected === 'complete' && !this.task.complete) || (this.selected === 'incomplete' && this.task.complete);
         }
     }
 }
 </script>
 <style scoped>
+template {
+    max-width: 400px;
+    padding: 0 10px;
+}
+
 p {
     font-size: 16px;
-    margin: 0;
+    overflow-wrap: break-word;
+    margin: 0 auto;
+    max-width: 300px;
 }
 
 .complete-task {
