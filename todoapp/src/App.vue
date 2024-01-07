@@ -51,9 +51,9 @@ export default {
     sortTasks() {
       this.tasks = this.tasks.sort((a, b) => {
         if (this.sortBy === 'incomplete') {
-          return a.complete - b.complete;
-        } else {
           return b.complete - a.complete;
+        } else {
+          return a.complete - b.complete;
         }
       });
     },
