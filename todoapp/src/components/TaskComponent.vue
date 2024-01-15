@@ -62,47 +62,56 @@ button {
     cursor: pointer;
 }
 
-/* Small devices (landscape phones, 576px and up) */
+/* Dostosowanie rozmiaru czcionki dla różnych urządzeń */
+
+/* Małe urządzenia (landscape phones, 576px i więcej) */
 @media (min-width: 576px) {
     p {
         font-size: 18px;
+        /* Dostosowanie rozmiaru tekstu na małych ekranach */
     }
 
     button {
         font-size: 18px;
+        /* Dostosowanie rozmiaru przycisków na małych ekranach */
     }
 }
 
-/* Medium devices (tablets, 768px and up) */
+/* Średnie urządzenia (tablety, 768px i więcej) */
 @media (min-width: 768px) {
     p {
         font-size: 20px;
+        /* Dostosowanie rozmiaru tekstu na tabletach */
     }
 
     button {
         font-size: 20px;
+        /* Dostosowanie rozmiaru przycisków na tabletach */
     }
 }
 
-/* Large devices (desktops, 992px and up) */
+/* Duże urządzenia (komputery, 992px i więcej) */
 @media (min-width: 992px) {
     p {
         font-size: 22px;
+        /* Dostosowanie rozmiaru tekstu na dużych ekranach */
     }
 
     button {
         font-size: 22px;
+        /* Dostosowanie rozmiaru przycisków na dużych ekranach */
     }
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
+/* Bardzo duże urządzenia (duże komputery, 1200px i więcej) */
 @media (min-width: 1200px) {
     p {
         font-size: 24px;
+        /* Dostosowanie rozmiaru tekstu na bardzo dużych ekranach */
     }
 
     button {
         font-size: 24px;
+        /* Dostosowanie rozmiaru przycisków na bardzo dużych ekranach */
     }
-}
-</style>
+}</style>
